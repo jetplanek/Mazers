@@ -1,26 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BasicMovementReal : MonoBehaviour
 {
-    public Rigidbody2D rb;
     public float moveSpeed;
     public Vector2 moveInput;
-    // Start is called before the first frame update
+
+    // Adjust these variables for each player
+    public string horizontalInputAxis;
+    public string verticalInputAxis;
+
+    // Each player needs its own Rigidbody2D
+    private Rigidbody2D rb;
+
     void Start()
     {
-        
+        // Get the Rigidbody2D component for each player
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-    moveInput.x = Input.GetAxisRaw("Horizontal");
-    moveInput.y = Input.GetAxisRaw("Vertical");
+        // Use the input axes specific to each player
+        moveInput.x = Input.GetAxisRaw(horizontalInputAxis);
+        moveInput.y = Input.GetAxisRaw(verticalInputAxis);
 
-    moveInput.Normalize();
+        moveInput.Normalize();
 
-    rb.velocity = moveInput * moveSpeed;
+        rb.velocity = moveInput * moveSpeed;
     }
 }
